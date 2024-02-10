@@ -19,13 +19,14 @@ This Python script generates abstract artworks in the style of Damien Hirst's ic
 2. Download a hirst-painting.jpg image:
 - This image will be used to extract the color palette for your paintings.
 - You can use the one from the repo, find similar images online or create your own.
-- In case you an image other than the one in the repo, make sure to name it hirst-painting.jpg
+- In case you an image other than the one in the repo, make sure to name it `hirst-painting.jpg`
 
 3. Run the script:
-python3 main.py
-
+``` bash
+    python3 main.py
+```
 ### Customization:
 
-- Change the values of num_rows, num_cols, dot_size, spacing, and background_color to adjust the appearance of your paintings.
+- Change the values of `num_rows`, `num_cols`, `dot_size`, `spacing`, and `background_color` to adjust the appearance of your paintings.
 - Use a different image for hirst-painting.jpg to create a new color palette.
 - Feel free to experiment with the code and modify it further to add more features or personalize your Hirst-inspired art!
