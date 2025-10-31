@@ -1,32 +1,93 @@
 # Hirst Spot Painting Generator
 
-This Python script generates abstract artworks in the style of Damien Hirst's iconic spot paintings, using color extraction and random placement of colorful circles.
+A small Python project that generates Hirst-style spot paintings. The code supports both an interactive Turtle-based renderer and a headless Pillow renderer that can export PNG images.
 
-### Features:
+Quick overview
+- Interactive renderer: opens a Turtle window and draws a grid of colored dots.
+- Headless renderer: creates PNG images using Pillow (no GUI required).
+- Palette extraction: uses `colorgram.py` when available, falls back to Pillow's adaptive quantization, and finally a built-in palette.
 
-- Creates spot paintings inspired by Hirst's signature style.
-- Leverages the colorgram library for accurate color extraction from an image.
+Features
+- Generate spot paintings with configurable rows/columns, dot size, spacing and background color.
+- Export to PNG (`--export`) for headless workflows.
+- Deterministic output with `--seed`.
+- Safe dry-run (`--no-window`) to print configuration without opening a GUI.
 
-### Requirements:
+Files of interest
+- `main.py` — CLI entrypoint (flags: `--rows`, `--cols`, `--dot-size`, `--spacing`, `--bg-color`, `--image`, `--export`, `--no-window`, `--seed`).
+- `palette.py` — palette extraction utilities (tries colorgram -> Pillow -> built-in fallback).
+- `renderer.py` — rendering backends (Turtle interactive and Pillow PNG export).
 
-1. Python
-2. colorgram library (can be installed using `pip install colorgram`)
-3. turtle library (included in standard Python installation)
+Requirements
+- Python 3.8+ (virtualenv recommended)
+- Pillow (for PNG export and palette fallback)
+- colorgram.py (optional; install only if you prefer it)
 
-### Instructions:
-1. Clone or fork this repository.
+Install
+1. Create and activate a virtual environment (PowerShell example):
 
-2. Download a hirst-painting.jpg image:
-- This image will be used to extract the color palette for your paintings.
-- You can use the one from the repo, find similar images online or create your own.
-- In case you an image other than the one in the repo, make sure to name it `hirst-painting.jpg`
-
-3. Run the script:
-``` bash
-    python3 main.py
+```powershell
+python -m venv venv
+& "${PWD}\venv\Scripts\Activate.ps1"
 ```
-### Customization:
 
-- Change the values of `num_rows`, `num_cols`, `dot_size`, `spacing`, and `background_color` to adjust the appearance of your paintings.
-- Use a different image for hirst-painting.jpg to create a new color palette.
-- Feel free to experiment with the code and modify it further to add more features or personalize your Hirst-inspired art!
+2. Install dependencies:
+
+```powershell
+pip install -r requirements.txt
+```
+
+Basic usage examples (PowerShell)
+
+- Dry-run (prints configuration and palette, no GUI):
+
+```powershell
+python .\main.py --no-window
+```
+
+- Interactive Turtle window:
+
+```powershell
+python .\main.py
+```
+
+- Export a PNG (headless). Requires Pillow in your venv:
+
+```powershell
+python .\main.py --export my_painting.png --no-window
+```
+
+- Reproducible output with a seed:
+
+```powershell
+python .\main.py --export seed_painting.png --seed 42 --no-window
+```
+
+Changing layout
+- Example: 12 rows, 8 columns, larger dots and more spacing:
+
+```powershell
+python .\main.py --rows 12 --cols 8 --dot-size 24 --spacing 60 --export big.png --no-window
+```
+
+Notes and troubleshooting
+- If PNG export fails with an error about Pillow, run:
+
+```powershell
+pip install pillow
+```
+
+- If you want to use `colorgram.py` for palette extraction, install it in the venv:
+
+```powershell
+pip install colorgram.py
+```
+
+Development notes
+- The project is modular: `palette.py` encapsulates color extraction strategies and `renderer.py` contains both interactive and headless renderers. This makes it easy to extend or replace backends.
+- Recommended next steps: add a small test suite that validates PNG export and palette extraction, or add a simple GUI to tweak parameters.
+
+License
+- This repo doesn't include an explicit license. If you plan to publish, consider adding an appropriate LICENSE file.
+
+Enjoy creating art!
